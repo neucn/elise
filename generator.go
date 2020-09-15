@@ -25,7 +25,7 @@ type session struct {
 	client *http.Client
 }
 
-type GenerateFunc func(courses []*Course, startDay time.Time, output string) (generated string, err error)
+type GenerateFunc func(courses []*Course, startDay time.Time, output string) (path string, err error)
 
 func (s *session) Generate(generateFunc GenerateFunc, output string) (path string, err error) {
 	var body string
