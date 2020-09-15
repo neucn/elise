@@ -1,0 +1,32 @@
+name: release
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: publish releases
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Golang
+        uses: actions/setup-go@v2
+        with:
+          go-version: '^1.14.1'
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+      - name: Build
+        run: |
+          chmod +x ./release.sh
+          ./release.sh ${{ steps.get_version.outputs.VERSION }}
+      - name: Upload to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            release/linux.zip
+            release/darwin.zip
+            release/windows.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
