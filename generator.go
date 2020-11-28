@@ -136,9 +136,9 @@ func New(username, password string, webVPN bool) (Generator, error) {
 	var platform neugo.Platform
 	if webVPN {
 		platform = neugo.WebVPN
-		s.currentWeekUrl = neugo.EncryptWebVPNUrl(defaultCurrentWeekUrl)
-		s.courseTableUrl = neugo.EncryptWebVPNUrl(defaultCourseTableUrl)
-		s.courseTableActionUrl = neugo.EncryptWebVPNUrl(defaultCourseTableActionUrl)
+		s.currentWeekUrl = neugo.EncryptToWebVPN(defaultCurrentWeekUrl)
+		s.courseTableUrl = neugo.EncryptToWebVPN(defaultCourseTableUrl)
+		s.courseTableActionUrl = neugo.EncryptToWebVPN(defaultCourseTableActionUrl)
 	} else {
 		platform = neugo.CAS
 		s.currentWeekUrl = defaultCurrentWeekUrl
@@ -147,7 +147,7 @@ func New(username, password string, webVPN bool) (Generator, error) {
 	}
 
 	client := neugo.NewSession()
-	if err := neugo.Use(client).WithAuth(username, password).On(platform).Login(); err != nil {
+	if err := neugo.Use(client).WithAuth(username, password).Login(platform); err != nil {
 		return nil, err
 	}
 	s.client = client
