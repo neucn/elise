@@ -177,7 +177,7 @@ END:VTIMEZONE` + "\n"
 		for i := 0; i < len(periods); i++ {
 			var eventData string
 			eventData = `BEGIN:VEVENT` + "\n"
-			startDate := startDay.AddDate(0, 0, (startWeek[i]-1)*7+weekDay+1)
+			startDate := startDay.AddDate(0, 0, (startWeek[i]-1)*7+(weekDay+1)%7)
 
 			if strings.Contains(course.RoomName, "浑南") {
 				eventData = eventData + `DTSTART;TZID=Asia/Shanghai:` + startDate.Format("20060102T") + ClassStartTimeHunnan[st] + "\n"

@@ -136,9 +136,9 @@ func New(username, password string, webVPN bool) (Generator, error) {
 	var platform neugo.Platform
 	if webVPN {
 		platform = neugo.WebVPN
-		s.currentWeekUrl = neugo.EncryptToWebVPN(defaultCurrentWeekUrl)
-		s.courseTableUrl = neugo.EncryptToWebVPN(defaultCourseTableUrl)
-		s.courseTableActionUrl = neugo.EncryptToWebVPN(defaultCourseTableActionUrl)
+		s.currentWeekUrl = neugo.EncryptURLToWebVPN(defaultCurrentWeekUrl)
+		s.courseTableUrl = neugo.EncryptURLToWebVPN(defaultCourseTableUrl)
+		s.courseTableActionUrl = neugo.EncryptURLToWebVPN(defaultCourseTableActionUrl)
 	} else {
 		platform = neugo.CAS
 		s.currentWeekUrl = defaultCurrentWeekUrl
